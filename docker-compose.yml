@@ -1,0 +1,11 @@
+services:
+    protocolx-dev:
+        build:
+            context: . # Dockerfile 所在路径
+            dockerfile: Dockerfile # 可省略，如果文件名就是 Dockerfile
+        container_name: protocolx-dev
+        working_dir: /workspace
+        volumes:
+            - .:/workspace # 本地目录挂载到容器中
+        tty: true # 保持交互式终端
+        stdin_open: true # 支持 Ctrl+C / 交互输入
