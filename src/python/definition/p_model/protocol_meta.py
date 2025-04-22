@@ -1,4 +1,4 @@
-from typing import Optional, Type
+from typing import Any, Optional, Type
 
 from pydantic import BaseModel
 
@@ -11,6 +11,5 @@ class ProtocolMeta(BaseModel):
     - `USE_DEFAULT`: 是否允许使用默认实现。
     """
 
-    DEFAULT: Optional[Type] = None  # 默认实现类，类型为类对象（可选）
+    DEFAULT: Optional[Type[Any]] = None  # 默认实现类，类型为类对象（可选）
     USE_DEFAULT: bool = True  # 是否使用默认实现，默认为 True
-    UNSAFE: bool = False  # 是否用户自身负责实现的完备性，默认为 False
