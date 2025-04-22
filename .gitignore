@@ -1,3 +1,5 @@
+.git/
+
 # Python-generated files
 __pycache__/
 *.py[oc]
@@ -8,3 +10,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+# 测试相关缓存
+.pytest_cache/
+.hypothesis/

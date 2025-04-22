@@ -1,9 +1,10 @@
 import inspect
+from types import FunctionType, MethodType
 from typing import Any, Callable, Optional, Type
 
-from definition.const.protocol_meta import PROTOCOL_META_ATTR
-from definition.enum.check_status import CheckStatus
-from definition.protocolx import Protocolx
+from src.python.definition.const.protocol_meta import PROTOCOL_META_ATTR
+from src.python.definition.enum.check_status import CheckStatus
+from src.python.definition.protocolx import Protocolx
 
 
 def _get_class_methods(cls: Type) -> dict[str, Callable]:
@@ -20,7 +21,16 @@ def _get_class_methods(cls: Type) -> dict[str, Callable]:
             一个字典，键是方法名，值是该类定义的可调用成员（如实例方法、类方法、静态方法）。
             不包含继承自父类但未重写的方法。
     """
-    return {name: member for name, member in vars(cls).items() if callable(member)}
+
+    methods = {}
+    for name, member in vars(cls).items():
+        if isinstance(member, (FunctionType, MethodType)):  # 普通函数或实例方法
+            methods[name] = member
+        elif isinstance(member, staticmethod):  # 静态方法
+            methods[name] = member.__func__
+        elif isinstance(member, classmethod):  # 类方法
+            methods[name] = member.__func__
+    return methods
 
 
 def _get_protocol_methods(proto: Type[Protocolx]) -> dict[str, Callable]:

@@ -1,6 +1,6 @@
 from typing import Any, Dict, Protocol
 
-from definition.enum.protocol_meta_key import ProtocolMetaKey
+from src.python.definition.enum.protocol_meta_key import ProtocolMetaKey
 
 
 class Protocolx(Protocol):
