@@ -7,6 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "commitizen>=4.6.0",
     "hypothesis>=6.131.6",
+    "pydantic>=2.11.3",
     "pytest>=8.3.5",
 ]
 

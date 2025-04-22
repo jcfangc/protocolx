@@ -1,6 +1,6 @@
-from typing import Any, Dict, Protocol
+from typing import Protocol
 
-from src.python.definition.enum.protocol_meta_key import ProtocolMetaKey
+from src.python.definition.p_model.protocol_meta import ProtocolMeta
 
 
 class Protocolx(Protocol):
@@ -15,7 +15,7 @@ class Protocolx(Protocol):
     系统将通过该元信息指导 `@implements(...)` 装饰器行为。
     """
 
-    __protocolx__: Dict[ProtocolMetaKey, Any]
+    __protocolx__: ProtocolMeta
     """
     协议元信息配置字典，用于指导协议实现检查系统。
     """

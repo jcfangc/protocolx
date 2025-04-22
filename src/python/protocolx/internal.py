@@ -2,8 +2,8 @@ import inspect
 from types import FunctionType, MethodType
 from typing import Any, Callable, Optional, Type
 
-from src.python.definition.const.protocol_meta import PROTOCOL_META_ATTR
 from src.python.definition.enum.check_status import CheckStatus
+from src.python.definition.p_model.protocol_meta import ProtocolMeta
 from src.python.definition.protocolx import Protocolx
 
 
@@ -72,7 +72,7 @@ def _get_protocol_prefix(proto: Type) -> str:
     return proto.__name__.lower().removeprefix("i") + "_"
 
 
-def _get_protocol_meta(proto: Type[Protocolx]) -> dict[str, Any]:
+def _get_protocol_meta(proto: Type[Protocolx]) -> ProtocolMeta:
     """
     获取协议类上绑定的元信息配置。
 
@@ -86,10 +86,10 @@ def _get_protocol_meta(proto: Type[Protocolx]) -> dict[str, Any]:
             协议类，需继承自 Protocolx 并定义 `__protocolx__` 属性。
 
     Returns:
-        dict[str, Any]:
-            包含协议元信息的字典，若协议未定义元信息则返回空字典。
+        ProtocolMeta:
+            包含协议元信息的 Pydantic 模型对象，若协议未定义元信息则返回默认值。
     """
-    return getattr(proto, PROTOCOL_META_ATTR, {})
+    return proto.__protocolx__
 
 
 def _check_method_exists(

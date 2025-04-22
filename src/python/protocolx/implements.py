@@ -2,7 +2,6 @@ import inspect
 from typing import Callable, Type
 
 from definition.enum.check_status import CheckStatus
-from definition.enum.protocol_meta_key import ProtocolMetaKey
 from definition.protocolx import Protocolx
 from protocolx.internal import (
     _check_method_exists,
@@ -35,8 +34,8 @@ def _check_and_inject_protocol(
         cls_methods (dict[str, Callable]): 目标类中定义的所有可调用方法的映射（已由上层函数提前提取）。
     """
     meta = _get_protocol_meta(proto)
-    defaults_provider = meta.get(ProtocolMetaKey.DEFAULTS)
-    use_default: bool = meta.get(ProtocolMetaKey.USE_DEFAULT, True)
+    defaults_provider = meta.DEFAULT
+    use_default: bool = meta.USE_DEFAULT
 
     proto_name = proto.__name__
     prefix = _get_protocol_prefix(proto)
