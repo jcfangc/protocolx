@@ -1,3 +1,9 @@
+## v0.2.0 (2025-04-23)
+
+### Feat
+
+- **src.python.definition.namedtuple-&-test.python.protocolx.internal**: change `_check_method_exists` return type to namedtuple
+
 ## v0.1.2 (2025-04-22)
 
 ### Refactor
