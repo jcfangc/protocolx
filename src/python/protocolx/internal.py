@@ -3,6 +3,7 @@ from types import FunctionType, MethodType
 from typing import Any, Callable, Optional, Type
 
 from src.python.definition.enum.check_status import CheckStatus
+from src.python.definition.namedtuple.method_check_result import MethodCheckResult
 from src.python.definition.p_model.protocol_meta import ProtocolMeta
 from src.python.definition.protocolx import Protocolx
 
@@ -96,7 +97,7 @@ def _check_method_exists(
     expected_name: str,
     proto_method: Callable,
     cls_methods: dict[str, Callable],
-) -> tuple[bool, bool]:
+) -> MethodCheckResult:
     """
     检查实现类中是否存在指定方法，且其签名是否与协议定义一致。
 
@@ -111,16 +112,16 @@ def _check_method_exists(
             实现类中所有方法的字典（通常由 `_get_class_methods` 获取）。
 
     Returns:
-        tuple[bool, bool]:
+        MethodCheckResult(exits: bool, signature_ok: bool):
             - 第一个值表示该方法是否存在于类中；
             - 第二个值表示方法签名是否与协议中定义的一致（仅在存在时才有意义）。
     """
     if expected_name not in cls_methods:
-        return False, False
+        return MethodCheckResult(exists=False, signature_ok=False)
 
     proto_sig = inspect.signature(proto_method)
     impl_sig = inspect.signature(cls_methods[expected_name])
-    return True, proto_sig == impl_sig
+    return MethodCheckResult(exists=True, signature_ok=proto_sig == impl_sig)
 
 
 def _inject_default_if_available(
