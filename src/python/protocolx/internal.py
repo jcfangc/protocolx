@@ -127,7 +127,7 @@ def _check_method_exists(
 def _inject_default_if_available(
     cls: Type,
     method_name: str,
-    defaults_provider: Any,
+    defaults_provider: Type[Any],
 ) -> bool:
     """
     尝试将默认实现注入到目标类中。
@@ -145,7 +145,7 @@ def _inject_default_if_available(
         method_name (str):
             期望注入的方法名（通常为协议名派生后的名称，如 `greeter_greet`）。
 
-        defaults_provider (Any):
+        defaults_provider (Type[Any]):
             提供默认实现的方法容器，可以是类、模块、对象等。
 
     Returns:
@@ -161,6 +161,7 @@ def _inject_default_if_available(
             return True
 
         return False
+    return False
 
 
 def _report_check_result(
