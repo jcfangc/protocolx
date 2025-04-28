@@ -201,12 +201,12 @@ def _report_check_result(
     """
     match status:
         case CheckStatus.OK:
-            print(f"\t✅ {method_name}()")
+            print(f"\t{method_name}()")
         case CheckStatus.INJECTED:
-            print(f"\t✅ {method_name}() → injected from defaults")
+            print(f"\t{method_name}() → injected from defaults")
         case CheckStatus.MISMATCH:
-            print(f"\t⚠️  {method_name}() → Signature mismatch!")
+            print(f"\t{method_name}() → Signature mismatch!")
             print(f"\t\tExpected: {expected_sig}")
             print(f"\t\tFound:    {actual_sig}")
         case CheckStatus.MISSING:
-            print(f"\t❌ {method_name}() → MISSING")
+            print(f"\t{method_name}() → MISSING")
