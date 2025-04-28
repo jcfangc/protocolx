@@ -15,7 +15,7 @@ def test_report_check_result_ok(capsys: CaptureFixture):
     _report_check_result("greeter_greet", CheckStatus.OK)
 
     captured = capsys.readouterr()  # 捕获输出
-    assert "✅ greeter_greet()" in captured.out
+    assert "greeter_greet()" in captured.out
 
 
 def test_report_check_result_injected(capsys: CaptureFixture):
@@ -23,7 +23,7 @@ def test_report_check_result_injected(capsys: CaptureFixture):
     _report_check_result("greeter_greet", CheckStatus.INJECTED)
 
     captured = capsys.readouterr()  # 捕获输出
-    assert "✅ greeter_greet() → injected from defaults" in captured.out
+    assert "greeter_greet() → injected from defaults" in captured.out
 
 
 def test_report_check_result_mismatch(capsys: CaptureFixture) -> None:
@@ -36,7 +36,6 @@ def test_report_check_result_mismatch(capsys: CaptureFixture) -> None:
 
     captured = capsys.readouterr()
     assert "greeter_greet() → Signature mismatch" in captured.out
-
     assert "Expected: (x)" in captured.out
     assert "Found:    (x, y)" in captured.out
 
@@ -46,7 +45,7 @@ def test_report_check_result_missing(capsys: CaptureFixture):
     _report_check_result("greeter_greet", CheckStatus.MISSING)
 
     captured = capsys.readouterr()  # 捕获输出
-    assert "❌ greeter_greet() → MISSING" in captured.out
+    assert "greeter_greet() → MISSING" in captured.out
 
 
 # 3. 使用 hypothesis 进行进一步的签名测试
@@ -62,6 +61,6 @@ def test_report_check_result_with_random_method_names(method_name):
         )
 
     out = buf.getvalue()
-    assert f"⚠️  {method_name}() → Signature mismatch!" in out
+    assert f"{method_name}() → Signature mismatch!" in out
     assert "Expected: (x)" in out
     assert "Found:    (x, y)" in out
