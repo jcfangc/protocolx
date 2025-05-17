@@ -3,8 +3,7 @@ repos:
       hooks:
           - id: pytest-before-add
             name: Run pytest before add
-            entry: uv run python -m pytest
-            language: system
-            shell: powershell
+            entry: python -m pytest
+            language: python
             pass_filenames: false
             stages: [pre-commit]
