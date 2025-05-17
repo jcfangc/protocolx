@@ -1,3 +1,9 @@
+## v0.3.1 (2025-05-17)
+
+### Fix
+
+- **src.protocolx.definition.type.protocol_sequence**: remove duplicate elements in protocolsequence
+
 ## v0.3.0 (2025-05-17)
 
 ### Feat
