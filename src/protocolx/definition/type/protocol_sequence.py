@@ -21,7 +21,7 @@ class ProtocolSequence(Sequence[type]):
                 if not issubclass(b, Protocol):
                     raise TypeError(f"{b} is not a subclass of Protocol")
             self._items = tuple(
-                sorted(self._original_items, key=lambda cls: cls.__name__)
+                sorted(set(self._original_items), key=lambda cls: cls.__name__)
             )
 
     def _ensure_names(self) -> None:
