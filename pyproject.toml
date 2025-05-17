@@ -4,10 +4,13 @@ version = "0.3.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
     "commitizen>=4.6.0",
     "hypothesis>=6.131.6",
-    "pydantic>=2.11.3",
     "pytest>=8.3.5",
 ]
 

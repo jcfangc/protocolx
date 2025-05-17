@@ -1,0 +1,10 @@
+repos:
+    - repo: local
+      hooks:
+          - id: pytest-before-add
+            name: Run pytest before add
+            entry: uv run python -m pytest
+            language: system
+            shell: powershell
+            pass_filenames: false
+            stages: [pre-commit]
