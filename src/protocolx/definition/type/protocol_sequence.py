@@ -26,7 +26,7 @@ class ProtocolSequence(Sequence[type]):
             for b in self._original_items:
                 if not isinstance(b, type):
                     raise TypeError(f"{b} is not a type")
-                if not issubclass(b, Protocol):
+                if not getattr(b, "_is_protocol", False):
                     raise TypeError(f"{b} is not a subclass of Protocol")
             self._items = tuple(
                 sorted(set(self._original_items), key=lambda cls: cls.__name__)
