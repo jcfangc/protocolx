@@ -1,7 +1,6 @@
 from typing import (
     Iterator,
     Optional,
-    Protocol,
     Sequence,
     SupportsIndex,
     Union,

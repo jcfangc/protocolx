@@ -21,4 +21,9 @@ version_scheme = "pep440"
 version_provider = "uv"
 update_changelog_on_bump = true
 major_version_zero = true
-add = false  # ✅ 禁用自动 git add .
+add = false 
+
+[project.urls]
+Homepage = "https://github.com/jcfangc/protocolx.git"
+Repository = "https://github.com/jcfangc/protocolx.git"
+Issues = "https://github.com/jcfangc/protocolx/issues"
