@@ -1,3 +1,9 @@
+## v0.4.0 (2025-05-18)
+
+### Refactor
+
+- **src\protocolx\definition\type\protocol_sequence**: support slicing ProtocolSequence with ProtocolSequence return type
+
 ## v0.3.1 (2025-05-17)
 
 ### Fix
