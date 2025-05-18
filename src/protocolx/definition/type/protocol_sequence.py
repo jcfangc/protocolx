@@ -4,7 +4,6 @@ from typing import (
     Protocol,
     Sequence,
     SupportsIndex,
-    Tuple,
     Union,
     overload,
 )
@@ -17,9 +16,9 @@ class ProtocolSequence(Sequence[type]):
     """
 
     def __init__(self, items: Sequence[type]) -> None:
-        self._original_items: Tuple[type, ...] = tuple(items)
-        self._items: Optional[Tuple[type, ...]] = None
-        self._names: Optional[Tuple[str, ...]] = None
+        self._original_items: tuple[type, ...] = tuple(items)
+        self._items: Optional[tuple[type, ...]] = None
+        self._names: Optional[tuple[str, ...]] = None
         self._hash: Optional[int] = None
 
     def _ensure_sorted(self) -> None:
@@ -86,7 +85,7 @@ class ProtocolSequence(Sequence[type]):
         return self.names == other.names
 
     @property
-    def names(self) -> Tuple[str, ...]:
+    def names(self) -> tuple[str, ...]:
         self._ensure_names()
         assert self._names is not None
         return self._names
