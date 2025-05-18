@@ -1,3 +1,9 @@
+## v0.5.0 (2025-05-18)
+
+### Feat
+
+- **src\protocolx\compose_protocol**: add support for virtual module registration to enable pickle compatibility
+
 ## v0.4.0 (2025-05-18)
 
 ### Refactor
