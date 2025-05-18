@@ -1,6 +1,8 @@
 from typing import Protocol
 
 import pytest
+from hypothesis import given
+from hypothesis.strategies import integers, lists, sampled_from
 
 from src.protocolx.definition.type.protocol_sequence import (
     ProtocolSequence,
@@ -101,7 +103,9 @@ def test_non_type_object_should_raise() -> None:
     """
     测试：非类型对象（如字符串）作为输入项，访问时应抛出 TypeError。
     """
-    ps = ProtocolSequence([A, "not a type"])  # 初始化阶段不报错
+    # 拆分变量避免全行红线
+    bad: object = "not a type"
+    ps = ProtocolSequence([A, bad])  # type: ignore[list-item]
     with pytest.raises(TypeError, match="not a type"):
         list(ps)  # 强制触发 _ensure_sorted，触发类型检查
 
@@ -116,3 +120,53 @@ def test_duplicate_protocols_are_preserved() -> None:
     ps = ProtocolSequence([B, A, B])
     assert list(ps) == [A, B]  # 因为 A < B，且不保留重复
     assert ps.names == ("A", "B")
+
+
+@given(lists(sampled_from([A, B, C]), min_size=1, max_size=5))
+def test_index_access_and_negative_index(protocols: list[type]) -> None:
+    """
+    测试：正向和负向索引都能访问排序后的正确元素。
+    """
+    ps = ProtocolSequence(protocols)
+    sorted_protocols = sorted(set(protocols), key=lambda cls: cls.__name__)
+    for i in range(len(sorted_protocols)):
+        assert ps[i] == sorted_protocols[i]
+        assert ps[i - len(sorted_protocols)] == sorted_protocols[i]  # 负索引等价
+
+
+@given(lists(sampled_from([A, B, C]), min_size=1, max_size=5))
+def test_slice_returns_sorted_subset(protocols: list[type]) -> None:
+    """
+    测试：切片返回排序后子序列，类型应一致。
+    """
+    ps = ProtocolSequence(protocols)
+    expected = sorted(set(protocols), key=lambda cls: cls.__name__)
+    sliced = ps[1:]  # 截断部分
+    assert isinstance(sliced, ProtocolSequence)
+    assert sliced == ProtocolSequence(expected[1:])
+    for cls in sliced:
+        assert isinstance(cls, type)
+
+
+@given(
+    lists(sampled_from([A, B, C]), min_size=1, max_size=5),
+    integers(min_value=100, max_value=200),
+)
+def test_index_out_of_bounds_raises(protocols: list[type], idx: int) -> None:
+    """
+    测试：越界索引应抛出 IndexError。
+    """
+    ps = ProtocolSequence(protocols)
+    with pytest.raises(IndexError):
+        _ = ps[idx]
+
+
+@given(lists(sampled_from([A, B, C]), min_size=1, max_size=5))
+def test_slice_out_of_range_should_not_fail(protocols: list[type]) -> None:
+    """
+    测试：切片超范围不应报错，行为应与 list 一致。
+    """
+    ps = ProtocolSequence(protocols)
+    sliced = ps[100:200]
+    assert isinstance(sliced, ProtocolSequence)
+    assert sliced == ProtocolSequence([])

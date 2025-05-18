@@ -4,5 +4,6 @@ repos:
           - id: pytest-before-add
             name: Run pytest before add
             entry: uv run python -m pytest
+            language: system
             pass_filenames: false
             stages: [pre-commit]

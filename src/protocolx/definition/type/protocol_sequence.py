@@ -1,4 +1,13 @@
-from typing import Iterator, Optional, Protocol, Sequence, Tuple
+from typing import (
+    Iterator,
+    Optional,
+    Protocol,
+    Sequence,
+    SupportsIndex,
+    Tuple,
+    Union,
+    overload,
+)
 
 
 class ProtocolSequence(Sequence[type]):
@@ -27,6 +36,7 @@ class ProtocolSequence(Sequence[type]):
     def _ensure_names(self) -> None:
         if self._names is None:
             self._ensure_sorted()
+            assert self._items is not None
             self._names = tuple(cls.__name__ for cls in self._items)
 
     def _ensure_hash(self) -> None:
@@ -36,23 +46,38 @@ class ProtocolSequence(Sequence[type]):
 
     def __iter__(self) -> Iterator[type]:
         self._ensure_sorted()
+        assert self._items is not None
         return iter(self._items)
 
     def __len__(self) -> int:
         self._ensure_sorted()
+        assert self._items is not None
         return len(self._items)
 
-    def __getitem__(self, idx: int) -> type:
+    @overload
+    def __getitem__(self, index: SupportsIndex) -> type: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> "ProtocolSequence": ...
+
+    def __getitem__(
+        self, index: SupportsIndex | slice
+    ) -> Union[type, "ProtocolSequence"]:
         self._ensure_sorted()
-        return self._items[idx]
+        assert self._items is not None
+        if isinstance(index, slice):
+            return ProtocolSequence(self._items[index])
+        return self._items[index]
 
     def __repr__(self) -> str:
         self._ensure_names()
+        assert self._names is not None
         names = ", ".join(self._names)
         return f"ProtocolSequence({names})"
 
     def __hash__(self) -> int:
         self._ensure_hash()
+        assert self._hash is not None
         return self._hash
 
     def __eq__(self, other: object) -> bool:
@@ -63,4 +88,5 @@ class ProtocolSequence(Sequence[type]):
     @property
     def names(self) -> Tuple[str, ...]:
         self._ensure_names()
+        assert self._names is not None
         return self._names
