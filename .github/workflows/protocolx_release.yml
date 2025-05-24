@@ -22,7 +22,7 @@ jobs:
               run: pip install uv
 
             - name: Install project dependencies with uv
-              run: uv pip install -r requirements.txt || uv pip install .
+              run: uv pip install .
 
             - name: Install build tools
               run: pip install build twine pytest
@@ -39,5 +39,5 @@ jobs:
             - name: Publish to PyPI
               env:
                   TWINE_USERNAME: __token__
-                  TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }} # type: ignore
+                  TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
               run: twine upload dist/*
