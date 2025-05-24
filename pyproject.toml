@@ -1,6 +1,6 @@
 [project]
 name = "protocolx"
-version = "0.5.0"
+version = "0.6.0"
 description = "A type-safe protocol composition and runtime synthesis tool for Python, enabling plugin-based architectures and automatic protocol binding with full support for runtime checking, serialization, and IDE/type checker integration."
 readme = "README.md"
 requires-python = ">=3.11"

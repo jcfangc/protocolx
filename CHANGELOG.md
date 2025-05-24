@@ -1,3 +1,9 @@
+## v0.6.0 (2025-05-24)
+
+### Feat
+
+- **protocolx.global_var**: add module-level protocol cache using anon module namespace
+
 ## v0.5.0 (2025-05-18)
 
 ### Feat
