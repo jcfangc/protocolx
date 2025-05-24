@@ -4,7 +4,9 @@ import pytest
 
 from src.protocolx.compose_protocol import compose_protocol
 from src.protocolx.definition.type.protocol_sequence import ProtocolSequence
-from src.protocolx.global_var.protocol_cache import _protocol_cache
+from src.protocolx.global_var.protocol_cache import (
+    clear_protocol_cache,
+)
 
 # ===== 示例协议 =====
 
@@ -22,7 +24,7 @@ class D(Protocol): ...
 
 
 def test_compose_protocol_with_runtime_enabled() -> None:
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     ps = ProtocolSequence([A, B])
     cls = compose_protocol(ps, runtime=True)
@@ -42,7 +44,7 @@ def test_compose_protocol_with_runtime_disabled() -> None:
     测试：当 runtime=False 时，不具备 __runtime_protocol__ 属性，
     运行时检查 isinstance / issubclass 会抛出 TypeError。
     """
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     ps = ProtocolSequence([A, B])
     cls = compose_protocol(ps, runtime=False)

@@ -1,9 +1,10 @@
 [project]
 name = "protocolx"
 version = "0.5.0"
-description = "Add your description here"
+description = "A type-safe protocol composition and runtime synthesis tool for Python, enabling plugin-based architectures and automatic protocol binding with full support for runtime checking, serialization, and IDE/type checker integration."
 readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT"
 dependencies = []
 
 [dependency-groups]
@@ -12,6 +13,8 @@ dev = [
     "commitizen>=4.6.0",
     "hypothesis>=6.131.6",
     "pytest>=8.3.5",
+    "build>=1.2.2.post1",
+    "twine>=6.1.0",
 ]
 
 [tool.commitizen]
@@ -21,7 +24,7 @@ version_scheme = "pep440"
 version_provider = "uv"
 update_changelog_on_bump = true
 major_version_zero = true
-add = false 
+add = false
 
 [project.urls]
 Homepage = "https://github.com/jcfangc/protocolx.git"

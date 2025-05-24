@@ -5,7 +5,9 @@ from hypothesis.strategies import lists, sampled_from
 
 from src.protocolx.compose_protocol import compose_protocol
 from src.protocolx.definition.type.protocol_sequence import ProtocolSequence
-from src.protocolx.global_var.protocol_cache import _protocol_cache
+from src.protocolx.global_var.protocol_cache import (
+    clear_protocol_cache,
+)
 
 # ===== 示例协议 =====
 
@@ -48,7 +50,7 @@ def test_single_protocol_behavior(proto: type) -> None:
       * issubclass(Anonymous, proto) 为 True
       * isinstance(obj, Anonymous) 与 proto 相同行为
     """
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     seq = ProtocolSequence([proto])
     anon_cls = compose_protocol(seq, runtime=True)
@@ -69,7 +71,7 @@ def test_single_protocol_behavior(proto: type) -> None:
 
 @given(lists(sampled_from(ALL_PROTOCOLS), min_size=2, max_size=3))
 def test_multi_protocol_behavior(protocols: list[type]) -> None:
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     seq = ProtocolSequence(protocols)
     anon = compose_protocol(seq, runtime=True)

@@ -3,8 +3,12 @@ import types
 from types import new_class
 from typing import Protocol
 
-from src.protocolx.definition.type.protocol_sequence import ProtocolSequence
-from src.protocolx.global_var.protocol_cache import _protocol_cache
+from protocolx.definition.type.protocol_sequence import ProtocolSequence
+from protocolx.global_var.protocol_cache import (
+    get_protocol,
+    get_protocol_cache,
+    set_protocol,
+)
 
 
 def _ensure_anon_module() -> None:
@@ -55,9 +59,11 @@ def compose_protocol(bases: ProtocolSequence, *, runtime: bool = False) -> type:
     _ensure_anon_module()
     class_name = _get_anon_protocol_class_name(bases, runtime)
     # 已经存在直接复用
-    if class_name in _protocol_cache:
-        return _protocol_cache[class_name]
+    if class_name in get_protocol_cache():
+        protocol_class = get_protocol(name=class_name)
+        assert protocol_class is not None
+        return protocol_class
     cls = _create_anon_protocol_class(class_name, bases, runtime)
     _attach_class_to_anon_module(class_name, cls)
-    _protocol_cache[class_name] = cls
+    set_protocol(name=class_name, cls=cls)
     return cls

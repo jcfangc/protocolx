@@ -7,7 +7,7 @@ from hypothesis.strategies import lists, sampled_from
 
 from src.protocolx.compose_protocol import compose_protocol
 from src.protocolx.definition.type.protocol_sequence import ProtocolSequence
-from src.protocolx.global_var.protocol_cache import _protocol_cache
+from src.protocolx.global_var.protocol_cache import clear_protocol_cache
 
 # ===== 示例协议 =====
 
@@ -29,7 +29,7 @@ def test_same_combination_returns_same_class(protocols: list[type]) -> None:
     """
     测试：相同的协议组合（不同顺序）返回同一个匿名 Protocol 类对象（缓存命中）。
     """
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     ps1 = ProtocolSequence(protocols)
     cls1 = compose_protocol(ps1)
@@ -45,7 +45,7 @@ def test_different_combinations_return_different_classes() -> None:
     """
     测试：不同的协议组合返回不同的匿名 Protocol 类对象。
     """
-    _protocol_cache.clear()  # ✅ 清空缓存避免污染
+    clear_protocol_cache()  # ✅ 清空缓存避免污染
 
     # A + B
     cls1 = compose_protocol(ProtocolSequence([A, B]))
@@ -73,7 +73,7 @@ def test_composed_protocol_class_properties() -> None:
     - __module__ 正确
     - 名称中的 hash 来源一致
     """
-    _protocol_cache.clear()
+    clear_protocol_cache()
 
     ps = ProtocolSequence([A, B])
     runtime_flag = False
